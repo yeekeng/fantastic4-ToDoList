@@ -1,0 +1,26 @@
+{% extends 'header.html' %}
+
+{% block body_block %}
+        {% if registered %}
+         <strong>thank you for registering!</strong>
+        <a href="{% url "login" %}"class="btn btn-lg btn-success" role="button">Return to the homepage.</a>
+
+          <br />
+        {% else %}
+        <strong>register here!</strong><br />
+
+        <form id="user_form" method="post" action="" enctype="multipart/form-data">
+            {% csrf_token %}
+
+            <!-- Display each form. The as_p method wraps each element in a paragraph
+                 (<p>) element. This ensures each element appears on a new line,
+                 making everything look neater. -->
+            {{ user_form.as_p }}
+            {{ profile_form.as_p }}
+
+            <!-- Provide a button to click to submit the form. -->
+
+        <button type="submit" name="submit" value="Register" class="btn btn-lg btn-primary">Register</button>
+        </form>
+        {% endif %}
+{% endblock %}

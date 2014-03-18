@@ -1,0 +1,24 @@
+{% extends 'header.html' %}
+
+{% block body_block %}
+ <h1>Rango says...hello world!</h1>
+
+         <h1>{{ category_name }}</h1>
+        {% if userprofile %}
+            {% if task %}
+            <ul>
+                {% for task in task %}
+                <li>{{ task.TaskName }}</li>
+                {% endfor %}
+            </ul>
+            {% else %}
+                <strong>No pages currently in category.</strong>
+            {% endif %}
+        {% else %}
+            The specified category {{ category_name }} does not exist!
+        {% endif %}
+
+
+
+
+{% endblock %}
