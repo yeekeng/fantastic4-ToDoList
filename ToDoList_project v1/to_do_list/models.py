@@ -39,6 +39,4 @@ class Task(models.Model):
     StartDate = models.DateField()
     EndDate = models.DateField()
 
-    def __unicode__(self):
-        return self.TaskName
 

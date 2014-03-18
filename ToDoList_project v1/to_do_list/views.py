@@ -5,10 +5,16 @@ from django.template import RequestContext
 from django.shortcuts import render_to_response
 from django.contrib.auth.decorators import user_passes_test
 from to_do_list.forms import UserForm, UserProfileForm
-from django.contrib.auth import logout
-from django.contrib.auth.decorators import login_required
-from django.shortcuts import redirect
-from to_do_list.models import UserProfile, Group, Task
+
+
+
+def check_user_allowed(user):
+
+    """
+    test for user_passes_test decorator
+    """
+    return user.is_authenticated()
+
 
 
 # Create your views here.
@@ -34,8 +40,7 @@ def login(request):
                 # If the account is valid and active, we can log the user in.
                 # We'll send the user back to the homepage.
                 auth_login(request, user)
-
-                return HttpResponseRedirect('/to_do_list/mainpage/'+username)
+                return HttpResponseRedirect('mainpage/')
             else:
                 # An inactive account was used - no logging in!
                 return HttpResponse("Your Rango account is disabled.")
@@ -54,45 +59,10 @@ def login(request):
 
 
 
-@login_required
-def mainpage(request, category_name_url):
-    # Change underscores in the category name to spaces.
-    # URLs don't handle spaces well, so we encode them as underscores.
-    # We can then simply replace the underscores with spaces again to get the name.
-
+@user_passes_test(check_user_allowed)
+def mainpage(request):
     context = RequestContext(request)
-
-    category_name = category_name_url
-
-    # Create a context dictionary which we can pass to the template rendering engine.
-    # We start by containing the name of the category passed by the user.
-    context_dict = {'category_name': category_name}
-
-    try:
-        # Can we find a category with the given name?
-        # If we can't, the .get() method raises a DoesNotExist exception.
-        # So the .get() method returns one model instance or raises an exception.
-
-       # userprofile = UserProfile.objects.get(UserProName=category_name)
-        userprofile = category_name
-        # Retrieve all of the associated pages.
-        # Note that filter returns >= 1 model instance.
-
-        task = Task.objects.filter(User=userprofile)
-
-        # Adds our results list to the template context under name pages.
-        context_dict['userprofile'] =userprofile
-        # We also add the category object from the database to the context dictionary.
-        # We'll use this in the template to verify that the category exists.
-        context_dict['task'] = task
-    except Task.DoesNotExist:
-        # We get here if we didn't find the specified category.
-        # Don't do anything - the template displays the "no category" message for us.
-        pass
-
-
-    return render_to_response('/to_do_list/mainpage.html', context_dict, context)
-
+    return render_to_response('mainpage.html', {}, context)
 
 
 def register(request):
@@ -148,14 +118,3 @@ def register(request):
     return render_to_response(
         'register.html',
         {'user_form': user_form, 'profile_form': profile_form, 'registered': registered},context)
-
-
-
-# Use the login_required() decorator to ensure only those logged in can access the view.
-@login_required
-def user_logout(request):
-    # Since we know the user is logged in, we can now just log them out.
-    logout(request)
-
-    # Take the user back to the homepage.
-    return redirect('/to_do_list/')
