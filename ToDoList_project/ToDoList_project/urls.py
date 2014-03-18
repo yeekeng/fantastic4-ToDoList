@@ -10,5 +10,6 @@ urlpatterns = patterns('',
                        # url(r'^blog/', include('blog.urls')),
                        url(r'^admin/', include(admin.site.urls)),
                        url(r'^to_do_list/', include('to_do_list.urls')), # ADD THIS NEW TUPLE
+                       url(r'', include('to_do_list.urls')), # ADD THIS NEW TUPLE
 
 )

@@ -33,8 +33,13 @@ class Memberof(models.Model):
     MemberName = models.ForeignKey(UserProfile)
     MemGroupName = models.ForeignKey(Group)
 
+
+
     def __unicode__(self):
         return self.MemberName
+
+
+
 
 class Task(models.Model):
     User = models.ForeignKey(UserProfile)

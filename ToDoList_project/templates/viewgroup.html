@@ -2,7 +2,9 @@
 {% block body_block %}
 
       <h1>{{ group_name }}</h1>
-
+   <!--  <a href="/to_do_list/createtask/{{ grp.id }}" class="btn btn-lg btn-info" role="button">Create New Task</a><br/>-->
+    <a href="{% url 'mainpage' %}" class="btn btn-lg btn-info" role="button">Main Page</a><br/>
+    <br/>
             {% if task %}
             <ul>
                 {% for t in task %}

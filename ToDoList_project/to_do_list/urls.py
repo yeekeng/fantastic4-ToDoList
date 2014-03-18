@@ -6,9 +6,11 @@ urlpatterns = patterns('',
         url(r'^register/$', views.register, name='register'),
         url(r'^logout/$', views.user_logout, name='logout'),
         url(r'^mainpage/$', views.mainpage, name='mainpage'),
+        #url(r'^createtask/(?P<group_id_url>\w+)/$', views.createtask, name='createtask'),
         url(r'^createtask/$', views.createtask, name='createtask'),
         url(r'^viewgroup/(?P<group_name_url>\w+)/$', views.viewgroup, name='viewgroup'),
         url(r'^edittask/(?P<task_id_url>\w+)/$', views.edittask, name='edittask'),
+        url(r'^creategrp/(?P<user_id>\w+)/$', views.creategrp, name='creategrp'),
 
 
 

@@ -21,6 +21,8 @@
    <form action="" method="POST">
    {% csrf_token %}
        {{ userform.management_form }}
+     <h3>Group of this Task: {{ task.Group }}</h3>
+
     {{ userform }}
 
 

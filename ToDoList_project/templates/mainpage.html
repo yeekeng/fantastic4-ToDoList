@@ -1,231 +1,248 @@
 {% extends 'header.html' %}
 
 {% block body_block %}
-    <script xmlns="http://www.w3.org/1999/html">
-       /* $(function () {
-            $("#accordion").accordion();
-        });*/
-   $(document).ready(function(){
-            $("#complete tr:odd").addClass("odd");
-            $("#complete tr:not(.odd)").hide();
-            $("#complete tr:first-child").show();
 
-            $("#complete tr.odd").click(function(){
-                $(this).next("tr").toggle();
-                $(this).find(".arrow").toggleClass("up");
-            });
-            //$("#report").jExpand();
-        });
-     $(document).ready(function(){
-            $("#complete2 tr:odd").addClass("odd");
-            $("#complete2 tr:not(.odd)").hide();
-            $("#complete2 tr:first-child").show();
-
-            $("#complete2 tr.odd").click(function(){
-                $(this).next("tr").toggle();
-                $(this).find(".arrow").toggleClass("up");
-            });
-            //$("#report").jExpand();
-        });
-
-    </script>
 
     <h1>Welome</h1>
-    <a href="{% url "createtask" %}" class="btn btn-lg btn-info" role="button">Create New Task</a><br/>
 
 
+<a href="{% url "createtask" %}" class="btn btn-lg btn-info" role="button">Create New Task</a>
+    &nbsp;
+<a href="/to_do_list/creategrp/{{ userprofile }}" class="btn btn-lg btn-info" role="button">Create New Group</a>
+<br/>
+<br/>
+
+    <div class="accordion" id="accordion2"
+         style="background-color: #ffffff;border: 2px darkgray;border-radius: 10px;padding: 0 8px;">
+    <form action="" method="POST">
+    <div class="accordion-group" style="border-color: #ffffff">
+
+        <div class="accordion-heading">
+            <a class="accordion-toggle btn btn-block" data-toggle="collapse" data-parent="#accordion2"
+               href="#collapseOne">Incomplete Task</a>
+        </div>
+
+        <div id="collapseOne" class="accordion-body collapse in">
+            <div class="accordion-inner">
 
 
-<div class="accordion" id="accordion2" style="background-color: #ffffff;border: 2px darkgray;border-radius: 10px;padding: 0 8px;">
- <form action="" method="POST">
-  <div class="accordion-group" style="border-color: #ffffff">
-
-    <div class="accordion-heading">
-      <a class="accordion-toggle btn btn-block" data-toggle="collapse" data-parent="#accordion2" href="#collapseOne" >Incomplete Task</a>
-    </div>
-
-    <div id="collapseOne" class="accordion-body collapse in">
-          <div class="accordion-inner">
-
-
-
-            {% csrf_token %}
+                {% csrf_token %}
 
                 {% if task_d %}
 
-                    <table id="complete" class="table table-hover">
-
-                            <tr>
-                                <th>Task Name</th><th>set to Completed</th>
-                            </tr>
-                        {% for task in task_d %}
 
 
-                            <tr>
+
+                    <div class="panel-group" id="accordion">
+
+
+                        <div class="panel panel-default">
+                        <table class="table table-hover">
+                            <th>Task name</th><th>Set completed</th>
+                            {% for task in task_d %}
+                                <tr>
+                               <!-- <td>-->
+                                <div class="panel-heading">
+                                    <!--<table class="table table-hover">-->
+
+                                        <!--<tr>-->
+                                            <td>
+                                                <h4 class="panel-title">
+                                                    <a data-toggle="collapse" data-parent="#accordion"
+                                                       href="#collapse{{ task.id }}">
+                                                        {{ task.TaskName }}
+                                                    </a>
+                                                </h4>
+                                            </td>
+                                            <td>
+                                                {{ task.id }}<input type="checkbox" name="mark_done"
+                                                                    value="{{ task.id }}"
+                                                                    id="mark_done_{{ task.id }}">
+                                            </td>
+                                            <td>
+                                                <a href="/to_do_list/edittask/{{ task.id }}"
+                                                   class="btn btn-info btn-small"
+                                                   role="button">edit task</a>
+                                            </td>
+                                        <!--</tr>-->
+                                    <!--</table>-->
+                                </div>
+                               <!-- </td>-->
+                                </tr>
+                                <tr>
                                 <td>
-                                    <ul>
-                                    <li>{{ task.TaskName }}</li>
-                                    </ul>
-                                </td>
-                                <td>
-
-
-                                    {{ task.id }}<input type="checkbox" name="mark_done" value="{{ task.id }}" id="mark_done_{{ task.id }}">
-                                </td>
-                                 <td>
-                                      <a href="/to_do_list/edittask/{{ task.id }}" class="btn btn-info btn-small" role="button">edit task</a>
-
-                                </td>
-
-                            </tr>
-                             <tr>
-                                 <td>
-                                     <ul style="list-style: none">
-                                         <li><b>Details:</b>
-                                          <li><b>Priority:</b>
-                                         <li><b>Start Date:</b>
-                                         <li><b>End Date:</b>
-                                     </ul>
-                                 </td>
-                                 <td>
-                                    <ul style="list-style: none">
-                                     <li>{{ task.Details}}</li>
-                                      <li>{{ task.get_Priority_display}}</li>
-                                      <li>{{ task.StartDate }}</li>
-                                       <li>{{ task.EndDate }}</li>
+                                <div id="collapse{{ task.id }}" class="panel-collapse collapse">
+                                    <div class="panel-body">
+                                        <table><tr>
+                                        <td>
+                                        <ul style="list-style: none">
+                                            <li><b>Group:</b></li>
+                                            <li><b>Details:</b>
+                                            <li><b>Priority:</b>
+                                            <li><b>Start Date:</b>
+                                            <li><b>End Date:</b>
                                         </ul>
-                                 </td>
+                                            </td>
+                                           <td>
+                                        <ul style="list-style: none">
+                                            <li>{{ task.Group }}</li>
+                                            <li>{{ task.Details }}</li>
+                                            <li>{{ task.get_Priority_display }}</li>
+                                            <li>{{ task.StartDate }}</li>
+                                            <li>{{ task.EndDate }}</li>
+                                        </ul>
+                                            </td>
+                                    </tr></table>
+                                    </div>
+                                </div>
+                                </td>
+                                </tr>
+                            {% endfor %}
+                        </table>
+                        </div>
 
-                             </tr>
+
+                    </div>
+<input id="mark_tasks_done" type="submit" name="mark_tasks_done" value="update"
+                                        class="btn btn-info">
 
 
-                        {% endfor %}
-                        <tr>
-                            <td><input id="mark_tasks_done" type="submit" name="mark_tasks_done" value="update" class="btn btn-info"></td>
 
-                        </tr>
 
-                    </table>
                 {% else %}
                     <strong>You do not have Task Currently</strong>
                 {% endif %}
 
 
-
-      </div>
+            </div>
+        </div>
     </div>
-  </div>
-  <div class="accordion-group" style="border-color: #ffffff">
+    <div class="accordion-group" style="border-color: #ffffff">
 
-    <div class="accordion-heading">
-      <a class="accordion-toggle btn btn-block" data-toggle="collapse" data-parent="#accordion2" href="#collapseTwo">My Groups</a>
+        <div class="accordion-heading">
+            <a class="accordion-toggle btn btn-block" data-toggle="collapse" data-parent="#accordion2"
+               href="#collapseTwo">My Groups</a>
+        </div>
+
+        <div id="collapseTwo" class="accordion-body collapse">
+            <div class="accordion-inner">
+
+
+                {% if groupin %}
+
+                    <ul>
+                        <b>click on the group name to manage group task. Personal task are consider as a group.</b>
+                        {% for groupin in groupin %}
+                            <li><a href="/to_do_list/viewgroup/{{ groupin.url }}">{{ groupin.MemGroupName }}</a>
+                            </li>
+
+                        {% endfor %}
+                    </ul>
+                {% else %}
+                    <strong>No group.</strong>
+                {% endif %}
+
+
+            </div>
+        </div>
     </div>
+    <div class="accordion-group" style="border-color: #ffffff">
 
-    <div id="collapseTwo" class="accordion-body collapse">
-        <div class="accordion-inner">
+        <div class="accordion-heading">
+            <a class="accordion-toggle btn btn-block" data-toggle="collapse" data-parent="#accordion2"
+               href="#collapsethree">Completed Task</a>
+        </div>
 
-
-
-            {% if groupin %}
-
-                <ul>
-                    <b>click on the group name to manage group task</b>
-                    {% for groupin in groupin %}
-                        <li><a href="/to_do_list/viewgroup/{{ groupin.url }}">{{ groupin.MemGroupName }}</a></li>
-
-                    {% endfor %}
-                </ul>
-            {% else %}
-                <strong>No group.</strong>
-            {% endif %}
-
-
-      </div>
-    </div>
-  </div>
-<div class="accordion-group" style="border-color: #ffffff">
-
-    <div class="accordion-heading">
-      <a class="accordion-toggle btn btn-block" data-toggle="collapse" data-parent="#accordion2" href="#collapse3">Completed Task</a>
-    </div>
-
-    <div id="collapse3" class="accordion-body collapse">
-        <div class="accordion-inner">
-
-
-
-
-
+        <div id="collapsethree" class="accordion-body collapse">
+            <div class="accordion-inner">
+<!-------------------------------------------------------------------------------------------->
 
                 {% if task_c %}
 
-                    <table id="complete2" class="table table-hover">
+				 <div class="panel-group" id="accordion">
+					<div class="panel panel-default">
 
-                            <tr>
-                                <th>Task Name</th><th>set to incomplete</th><th>Delete Task</th>
-                            </tr>
+                    <table class="table table-hover">
+
+                        <tr>
+                            <th>Task Name</th>
+                            <th>set to incomplete</th>
+                            <th>Delete Task</th>
+                        </tr>
                         {% for task in task_c %}
 
 
                             <tr>
+
+							 <div class="panel-heading">
                                 <td>
-                                    <ul>
-                                    <li>{{ task.TaskName }}</li>
-                                    </ul>
+                                   <h4 class="panel-title">
+                                                    <a data-toggle="collapse" data-parent="#accordion"
+                                                       href="#collapse{{ task.id }}">
+                                                        {{ task.TaskName }}
+                                                    </a>
+                                                </h4>
                                 </td>
                                 <td>
-
-
-                                    {{ task.id }}<input type="checkbox" name="undo_completed_task" value="{{ task.id }}" id="id_undo_completed_task{{ task.id }}">
+                                    {{ task.id }}<input type="checkbox" name="undo_completed_task"value="{{ task.id }}"id="id_undo_completed_task{{ task.id }}">
                                 </td>
-                                 <td>
-                                      <input type="checkbox" name="del_task" value="{{ task.id }}" id="del_task_{{ task.id }}">
+                                <td>
+                                    <input type="checkbox" name="del_task" value="{{ task.id }}"id="del_task_{{ task.id }}">
+                                </td>
+							</div>
+                            </tr>
 
+                            <tr>
+                                <td>
+                                   <div id="collapse{{ task.id }}" class="panel-collapse collapse">
+                                    <div class="panel-body">
+                                        <table><tr>
+                                        <td>
+                                        <ul style="list-style: none">
+                                            <li><b>Group:</b></li>
+                                            <li><b>Details:</b>
+                                            <li><b>Priority:</b>
+                                            <li><b>Start Date:</b>
+                                            <li><b>End Date:</b>
+                                        </ul>
+                                            </td>
+                                           <td>
+                                        <ul style="list-style: none">
+                                            <li>{{ task.Group }}</li>
+                                            <li>{{ task.Details }}</li>
+                                            <li>{{ task.get_Priority_display }}</li>
+                                            <li>{{ task.StartDate }}</li>
+                                            <li>{{ task.EndDate }}</li>
+                                        </ul>
+                                            </td>
+                                    </tr></table>
+                                    </div>
+                                </div>
                                 </td>
 
                             </tr>
-                             <tr>
-                                 <td>
-                                     <ul style="list-style: none">
-                                         <li><b>Details:</b>
-                                          <li><b>Priority:</b>
-                                         <li><b>Start Date:</b>
-                                         <li><b>End Date:</b>
-                                     </ul>
-                                 </td>
-                                 <td>
-                                    <ul style="list-style: none">
-                                     <li>{{ task.Details}}</li>
-                                      <li>{{ task.get_Priority_display}}</li>
-                                      <li>{{ task.StartDate }}</li>
-                                       <li>{{ task.EndDate }}</li>
-                                        </ul>
-                                 </td>
-
-                             </tr>
 
 
                         {% endfor %}
-                        <tr>
-                            <td><input id="mark_task_undone" type="submit" name="mark_task_undone" value="update" class="btn btn-info"></td>
 
-                        </tr>
 
                     </table>
+				</div>
+                  </div>
+                    <input id="mark_task_undone" type="submit" name="mark_task_undone" value="update"
+                                       class="btn btn-info">
                 {% else %}
                     <strong>You do not have Completed Task Currently</strong>
                 {% endif %}
 
-
-
-
-      </div>
+<!----------------------------------------------------------------------------------->
+            </div>
+        </div>
     </div>
-  </div>
 
 
-</form>
-</div>
+    </form>
+    </div>
 
 
 
