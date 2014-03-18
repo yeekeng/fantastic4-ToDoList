@@ -28,6 +28,13 @@ class Group(models.Model):
     def __unicode__(self):
         return self.GroupName
 
+# a user can be a member of itself
+class Memberof(models.Model):
+    MemberName = models.ForeignKey(UserProfile)
+    MemGroupName = models.ForeignKey(Group)
+
+    def __unicode__(self):
+        return self.MemberName
 
 class Task(models.Model):
     User = models.ForeignKey(UserProfile)
@@ -39,4 +46,6 @@ class Task(models.Model):
     StartDate = models.DateField()
     EndDate = models.DateField()
 
+    def __unicode__(self):
+        return self.TaskName
 

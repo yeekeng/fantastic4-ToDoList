@@ -38,6 +38,7 @@ TEMPLATE_DEBUG = True
 
 ALLOWED_HOSTS = []
 
+LOGIN_URL = '/to_do_list/'
 
 # Application definition
 

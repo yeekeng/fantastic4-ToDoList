@@ -1,0 +1,52 @@
+{% extends 'header.html' %}
+{% block body_block %}
+ <script>
+
+
+         $(function() {
+        $( "#id_myDate" ).datepicker();
+    });
+         $(function() {
+        $( "#id_endDate" ).datepicker();
+    });
+	</script>
+
+
+<form id="Task_form" method="post" action="/to_do_list/createtask/">
+
+  {% csrf_token %}
+
+
+    Assign to:{{ form.User }}
+    <br/>
+   Group: {{ form.Group }}
+    <br/>
+   Task Name: {{ form.TaskName }}
+    <br/>
+   Task Details: {{ form.Details  }}
+    <br/>
+   Task Priority: {{ form.Priority }}
+    <br/>
+    start Date: <input type="text" name="StartDate" id="id_myDate">
+    <br/>
+    End Date: <input type="text" name="EndDate" id="id_endDate">
+    <br/>
+
+
+
+ <button type="submit" value="submit" class="btn btn-lg btn-primary">Category</button>
+
+</form>
+
+
+
+
+
+
+
+
+
+
+
+
+{% endblock %}
