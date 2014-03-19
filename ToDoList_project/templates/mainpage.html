@@ -37,8 +37,9 @@
 
 
                         <div class="panel panel-default">
-                        <table class="table table-hover">
+                        <table class="table table-hover"><tr>
                             <th>Task name</th><th>Set completed</th>
+                            </tr>
                             {% for task in task_d %}
                                 <tr>
                                <!-- <td>-->
@@ -47,15 +48,15 @@
 
                                         <!--<tr>-->
                                             <td>
-                                                <h4 class="panel-title">
+                                                <h5 class="panel-title">
                                                     <a data-toggle="collapse" data-parent="#accordion"
                                                        href="#collapse{{ task.id }}">
                                                         {{ task.TaskName }}
                                                     </a>
-                                                </h4>
+                                                </h5>
                                             </td>
                                             <td>
-                                                {{ task.id }}<input type="checkbox" name="mark_done"
+                                                <input type="checkbox" name="mark_done"
                                                                     value="{{ task.id }}"
                                                                     id="mark_done_{{ task.id }}">
                                             </td>
@@ -176,12 +177,12 @@
 
 							 <div class="panel-heading">
                                 <td>
-                                   <h4 class="panel-title">
+                                   <h5 class="panel-title">
                                                     <a data-toggle="collapse" data-parent="#accordion"
                                                        href="#collapse{{ task.id }}">
                                                         {{ task.TaskName }}
                                                     </a>
-                                                </h4>
+                                                </h5>
                                 </td>
                                 <td>
                                     {{ task.id }}<input type="checkbox" name="undo_completed_task"value="{{ task.id }}"id="id_undo_completed_task{{ task.id }}">
